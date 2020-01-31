@@ -1,2 +1,2 @@
 # EQ2PC
-Equivalent 2 Point Correlation Microstructures
+Generation of structures with equivalent 2-point correlation
