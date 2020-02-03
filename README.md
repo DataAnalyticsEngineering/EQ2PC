@@ -5,6 +5,10 @@ Contact:
 mauricio.fernandez.lb@gmail.com
 fritzen@mechbau.uni-stuttgart.de
 
+Research group website: 
+https://www.mib.uni-stuttgart.de/en/emma/
+https://www.mib.uni-stuttgart.de/en/emma/team/
+
 ## Related work
 Manuscript
 
