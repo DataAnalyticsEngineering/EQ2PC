@@ -1,0 +1,6 @@
+Computation time:
+	0:00:00.500078
+d:
+	[12]
+nev:
+	[5]

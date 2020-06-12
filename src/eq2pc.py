@@ -18,7 +18,7 @@ with shape [4,3] and 3 phases with 3 events in phase 1 and 2 events in
 phase 2 (events for remaining phase are computed automatically).
 
     >>> import eq2pc as e2
-    >>> cases = e2.Ceqsearch([4,3],[3,2],b=True) # search for cases and break after first case
+    >>> cases = e2.Ceq_search([4,3],[3,2],b=True) # search for cases and break after first case
     >>> len(cases[0]) # number of 2PC-equivalent structures found in first case
     2
     >>> S1,S2 = cases[0] # extract structures from first case
@@ -36,8 +36,6 @@ phase 2 (events for remaining phase are computed automatically).
     True
     >>> e2.rel(S1,S2) # check if the structures are related by periodic translation or reflections
     False
-    
-(See also 'demo1_search.py' in Github repository for further examples).
 
 """
 
@@ -58,12 +56,14 @@ from matplotlib.patches import Patch
 
 #%% Utilities
 
+
 def fgrid(d):
     '''
     Flattened grid.
     '''
     n = np.prod(d)
     return np.array(np.unravel_index(range(n),d)).T
+
 
 def periodic(a):
     '''
@@ -72,8 +72,9 @@ def periodic(a):
     nd = np.ndim(a)
     aa = a
     for ax in range(nd):
-        aa = np.concatenate([aa,aa],ax)
+        aa = np.concatenate([aa, aa], ax)
     return aa
+
 
 def shift(a,s):
     '''
@@ -81,10 +82,11 @@ def shift(a,s):
     '''
     return np.roll(a,s,list(range(len(s))))
 
-def zp(a,z):
+
+def tre(a,z):
     '''
-    zp(a,z) return the zero-padded array (element-wise and dimension-wise
-    depending on vector z)
+    tre(a,z) return the trivially embedded (zero-padded) array 
+    (element-wise and dimension-wise depending on vector z)
 
     Parameters
     ----------
@@ -128,13 +130,62 @@ def zp(a,z):
                 out[::z[0],::z[1],0] = a
     return out
 
+
+def gS(d,nev,sh=True):
+    '''
+    Generate structure.
+    '''
+    ntotal = np.prod(d)
+    S = np.zeros(ntotal,dtype=np.int)
+    for ph in range(len(nev)):
+        S[int(np.sum(nev[:ph])):np.sum(nev[:ph+1])] = ph+1
+    if sh: np.random.shuffle(S)
+    if np.sum(nev)<ntotal:
+        S[S==0] = len(nev)+1
+    return S.reshape(d)
+
+
+def rnev(S):
+    '''
+    Return number of events.
+    '''
+    nph = np.max(S)
+    return np.array([np.sum(S==i) for i in range(1,nph+1)])
+
+
+def rS(Is,allI=True):
+    '''
+    Return structure.
+    '''
+    if allI:
+        # All indicators given
+        return np.sum([ii*II for ii,II in zip(range(1,len(Is)+1),Is)],0)
+    else:
+        # Only linear independent indicators given
+        temp = np.sum([ii*II for ii,II in zip(range(1,len(Is)+1),Is)],0)
+        temp[temp==0] = len(Is)+1
+        return temp
+
+    
+def rIs(S,allI=True):
+    '''
+    Return indicator arrays from S.
+    '''
+    if allI:
+        return 1*np.array([S==i1 for i1 in range(1,np.max(S)+1)])
+    else:
+        # only linear independent
+        return 1*np.array([S==i1 for i1 in range(1,np.max(S))])
+
 #%% Relation
+
 
 def rel_shift_explicit(a,b,s):
     '''
     Check if arrays a and b are related by the shift s.
     '''
     return np.all(a==shift(b,s))
+
 
 def rel_shift(a,b):
     '''
@@ -149,11 +200,13 @@ def rel_shift(a,b):
         i += 1
     return out
 
+
 def ref(a,ax):
     '''
     Shortcut for np.flip(a,ax).
     '''
     return np.flip(a,ax)
+
 
 def rel_ref_shift(a,b):
     '''
@@ -173,7 +226,8 @@ def rel_ref_shift(a,b):
         if out: break
         i += 1
     return out
-    
+
+
 def rel(a,b,ref=True):
     '''
     Check if array a and b are related.
@@ -183,11 +237,13 @@ def rel(a,b,ref=True):
         out = rel_ref_shift(a,b)
     return out
 
+
 def unrel(a,b):
     '''
     Check if arrays a and b are unrelated.
     '''
     return not rel(a,b)
+
 
 def unrelmax(a,unrel_h=unrel):
     '''
@@ -198,59 +254,19 @@ def unrelmax(a,unrel_h=unrel):
         out = np.concatenate([out,[a[0]]])
         a = a[list(map(lambda x: unrel_h(a[0],x),a))]
     return out
+
     
 #%% Basic operations conserving 2PC-equivalence
-    
-def gS(d,nev,sh=True):
-    '''
-    Generate structure.
-    '''
-    ntotal = np.prod(d)
-    S = np.zeros(ntotal,dtype=np.int)
-    for ph in range(len(nev)):
-        S[int(np.sum(nev[:ph])):np.sum(nev[:ph+1])] = ph+1
-    if sh: np.random.shuffle(S)
-    if np.sum(nev)<ntotal:
-        S[S==0] = len(nev)+1
-    return S.reshape(d)
 
-def rnev(S):
-    '''
-    Return number of events.
-    '''
-    nph = np.max(S)
-    return np.array([np.sum(S==i) for i in range(1,nph+1)])
-
-def rS(Is,allI=True):
-    '''
-    Return structure.
-    '''
-    if allI:
-        # All indicators given
-        return np.sum([ii*II for ii,II in zip(range(1,len(Is)+1),Is)],0)
-    else:
-        # Only linear independent indicators given
-        temp = np.sum([ii*II for ii,II in zip(range(1,len(Is)+1),Is)],0)
-        temp[temp==0] = len(Is)+1
-        return temp
-    
-def rIs(S,allI=True):
-    '''
-    Return indicator arrays from S.
-    '''
-    if allI:
-        return 1*np.array([S==i1 for i1 in range(1,np.max(S)+1)])
-    else:
-        # only linear independent
-        return 1*np.array([S==i1 for i1 in range(1,np.max(S))])
 
 def phe(S,z):
     '''
-    Phase extension through zero-padding
+    Phase extension through trivial embedding (zero-padding).
     '''
-    S = zp(S,z)
+    S = tre(S,z)
     S[S==0] = np.max(S)+1
     return S
+
 
 def ka(S,Ks):
     '''
@@ -268,10 +284,11 @@ def ka(S,Ks):
         return rS([signal.convolve(I,K)[:d[0],:d[1]] for I,K in zip(Is,Ks)],allI=False)
     if nd==3:
         return rS([signal.convolve(I,K)[:d[0],:d[1],:d[2]] for I,K in zip(Is,Ks)],allI=False)
+
     
-def se(S,Ks=[]):
+def kbe(S,Ks=[]):
     '''
-    Structure extension implicitly specified through the dimension of given kernels.
+    Kernel-based extension implicitly specified through the dimension of given kernels.
     '''
     if len(Ks)==0:
         D = np.ndim(S)
@@ -282,9 +299,10 @@ def se(S,Ks=[]):
             Ks[0][0,0,0] = 1
     return ka(phe(S,z=Ks[0].shape),Ks)
 
-def phc(S,c=[[1,2]]):
+
+def phc_old(S,c=[[1,2]]):
     '''
-    Phase concatenation.
+    Phase coalescence.
     '''
     ci = []
     for cc in c:
@@ -302,7 +320,48 @@ def phc(S,c=[[1,2]]):
             temp[temp==j] = counter
     return temp
 
+def phc(S, c=[[1,2]], info=False):
+    '''
+    Phase coalescence.
+
+    Parameters
+    ----------
+    S : np.array
+        Structure array
+    c : list, optional
+        List of phase indices to be coalesced. The default is [[1,2]].
+        Example: c=[[2,3],[1,6,5]] in a 7-phase structure will coalesce
+        phases 2 and 3 to the new phase 1, phases 1, 6 and 5 to the new 
+        phase 2. Then phase 4 will be the new phase 3 and phase 7 will 
+        be the new phase 4.
+    info: boolean, optional
+        Set to True if information on new phase indices is required
+
+    Returns
+    -------
+    np.array of phase coalesced structure.
+
+    '''
+    n_ph = np.max(S)
+    new_old = []
+    for i in range(len(c)):
+        new_old.append([i+1,c[i]])
+    old = set([phi for ci in c for phi in ci])
+    remaining = set(list(range(1,1+n_ph))).difference(old)
+    remaining = np.sort(list(remaining))
+    for i in range(len(remaining)):
+        new_old.append([len(c)+1+i,[remaining[i]]])
+    if info:
+        print('Mapping between new and old phase indices [new, [old1,...]]')
+        print(new_old)
+    Sout = S*0-1
+    for no in new_old:
+        for old in no[1]:
+            Sout[S==old] = no[0]
+    return Sout
+
 #%% 2PC
+
     
 def rC_s(Ia,Ib,s):
     '''
@@ -311,6 +370,7 @@ def rC_s(Ia,Ib,s):
     Ia[i,j,k]*Ib[i+2,j+3,k+0] and the corresponding sum.
     '''
     return np.sum(Ia*np.roll(Ib,-np.array(s),list(range(len(s)))))
+
 
 def rC(Ia,Ib,f=False,spec=False):
     '''
@@ -326,6 +386,7 @@ def rC(Ia,Ib,f=False,spec=False):
     else:
         dout = np.array(Ia.shape)   
         return np.array([rC_s(Ia,Ib,ss) for ss in fgrid(dout)]).reshape(dout)
+
     
 def rCs(S,allI=False,op=0,f=False,spec=False):
     '''
@@ -339,8 +400,10 @@ def rCs(S,allI=False,op=0,f=False,spec=False):
     # All
     if op==1:
         return np.array([[rC(Ia,Ib,f=f,spec=spec) for Ib in Is] for Ia in Is])
+
     
 #%% 2PC-equivalence
+
     
 def Ceq(S1,S2):
     '''
@@ -348,7 +411,8 @@ def Ceq(S1,S2):
     '''
     return np.all(rCs(S1)==rCs(S2))
 
-def Ceqsearch(d,nev,b=True,ref=True,f=False,spec=False,tol=1e-13,info=True):
+
+def Ceq_search(d,nev,b=True,ref=True,f=False,spec=False,tol=1e-13,info=False):
     # Turn off reflection relation if 3d
     if len(d)==3: ref = True
     
@@ -414,11 +478,12 @@ def Ceqsearch(d,nev,b=True,ref=True,f=False,spec=False,tol=1e-13,info=True):
     print('...Number of structure sets: %i' % len(out))
     return out
 
-def Ceqsave(d,nev,folder='default',info=True):
+
+def Ceq_search_save(d,nev,folder='default',info=False):
     if folder=='default':
-        folder = 'data/examples/'+str(len(d))+'d_'+'_'.join([str(dd) for dd in d])+'_nev_'+'_'.join([str(dd) for dd in nev])
+        folder = 'data/roots/'+str(len(d))+'d_'+'_'.join([str(dd) for dd in d])+'_nev_'+'_'.join([str(dd) for dd in nev])
     t1 = datetime.datetime.now()
-    out = Ceqsearch(d,nev,f=False,info=info)
+    out = Ceq_search(d,nev,f=False,info=info)
     t2 = datetime.datetime.now()
     
     print(t2-t1)
@@ -452,28 +517,38 @@ def Ceqsave(d,nev,folder='default',info=True):
                 
         return folder
 
-def Ceqload(folder,info=True):
+
+#%% Saved roots
+
+
+def root_load(folder,check=True):
     d = folder.split('d_')[1].split('_nev_')[0].split('_')
     d = [int(dd) for dd in d]
     files = np.sort(glob.glob(folder+'/*.dat'))
     S1 = np.loadtxt(files[0],dtype=np.int).reshape(d)
     S2 = np.loadtxt(files[1],dtype=np.int).reshape(d)
-    if info:
-        plotS(S1)
-        plotS(S2)
+    if check:
+        plot_S(S1)
+        plot_S(S2)
         print('Are the shown structures related?\n\t%r' % rel(S1,S2,True))
         print('Are the shown structures 2PC-equivalent?\n\t%r' % Ceq(S1,S2))
     return np.array([S1,S2])
 
-def Ceqexamples():
-    l = np.sort(glob.glob('data/examples/*'))
-    print('Currently available examples:')
+
+def roots_saved():
+    roots_folder = 'data/roots/'
+    roots = os.listdir(roots_folder)
+    l = [roots_folder + root for root in roots]
+    # l = np.sort(glob.glob('data/roots/*'))
+    print('List of currently available roots:')
     for ll in l: print('\t%s' % ll)
     return l
 
+
 #%% Plotting
 
-def plotS(S,per=False,fs=(15,15),save='',title=''):
+
+def plot_S(S,per=False,fs=(15,15),save='',title=''):
     '''
     Plot structure.
     '''
@@ -560,8 +635,9 @@ def plotS(S,per=False,fs=(15,15),save='',title=''):
         if len(save)>0:
             plt.savefig('./'+save)
         plt.show()
+
         
-def plotC(C,per=False):
+def plot_C(C,per=False):
     '''
     Plot 2PC for 1d and 2d structures.
     '''

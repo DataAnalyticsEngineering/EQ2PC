@@ -38,7 +38,7 @@ def iso(k):
     '''
     return k[0]*P1 + k[1]*P2
 
-def isoev(K):
+def iso_ev(K):
     '''
     Extract eigenvalues of given isotropic stiffness.
     '''
@@ -66,7 +66,7 @@ def rP0(K0):
     Polarization tensor from Willis 1977 for hs in 3-dimensional elasticity.
     (Willis 1977, (5.11), i.e., isotropic 2-point statistics, no long-range order, isotropic C0,...)
     '''
-    k = isoev(K0)
+    k = iso_ev(K0)
     p = [1/(k[0]+2*k[1]),2/(5*k[1])*(k[0]+3*k[1])/(k[0]+2*k[1])]
     return iso(p)
 
@@ -85,7 +85,7 @@ def hs(v,K,K0):
 
 #%% Evaluate structure
     
-def Siso(S,K):
+def S_iso_bounds(S,K):
     '''
     Evaluate structure for isotropic stiffnesses.
     '''
@@ -95,7 +95,7 @@ def Siso(S,K):
     
     # Get optimal isotropic comparison media
     # (for generalization to anisotropic stiffness list K, use Lobos and Böhlke (2016))
-    evs = np.array([isoev(KK) for KK in K])
+    evs = np.array([iso_ev(KK) for KK in K])
     K0low = iso(np.min(evs,axis=0))
     K0upp = iso(np.max(evs,axis=0))
     
@@ -113,14 +113,14 @@ def Siso(S,K):
     
     # Plot for 2 phases
     if nph==2:
-        plot2phiso(K,vl=v[0])
+        plot_2ph_iso(K,vl=v[0])
         
     # Return bounds
     return out
 
 #%% Plots
     
-def plot2phiso(K,n=20,vl=0):
+def plot_2ph_iso(K,n=20,vl=0):
     '''
     Plot for 2-phase isotropic 3d case.
     '''
@@ -135,7 +135,7 @@ def plot2phiso(K,n=20,vl=0):
             for v in v1
             ])
     
-    evs = np.array([isoev(KK) for KK in K])
+    evs = np.array([iso_ev(KK) for KK in K])
     K0low = iso(np.min(evs,axis=0))
     K0upp = iso(np.max(evs,axis=0))
     
@@ -157,5 +157,5 @@ def plot2phiso(K,n=20,vl=0):
         if vl!=0: plt.axvline(vl,color='gray',linestyle='--')
         plt.legend()
         plt.xlabel('$v_1$')
-        plt.title('Stiffness component (%i,%i)' % (i,i))
+        plt.title('Stiffness component (%i,%i)' % (i+1,i+1))
         plt.show()

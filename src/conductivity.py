@@ -17,7 +17,7 @@ from . import tensors as ten
 
 #%% Bounds
 
-def voigtiso(v,K):
+def voigt_iso(v,K):
     '''
     Voigt bound for isotropic phases with volume fractions v and conductivities
     K in dimension d \in \{2,3\}. Returns a scalar.
@@ -37,7 +37,7 @@ def voigt(v,K):
     '''
     return ten.av(v,K)
 
-def reussiso(v,K):
+def reuss_iso(v,K):
     '''
     Reuss bound for isotropic phases.
     Returns a scalar.
@@ -51,7 +51,7 @@ def reuss(v,K):
     '''
     return np.linalg.inv(ten.av(v,np.linalg.inv(K)))
 
-def hsiso(v,K,d=2):
+def hs_iso(v,K,d=2):
     '''
     Hashin-Shtrikman bounds for isotropic phases in dimension d.
     Torquato (2002), equation (21.23).
@@ -88,32 +88,35 @@ def hs(v,K,K0):
 
 #%% Evaluate structure
     
-def Siso(S,K):
+def S_iso_bounds(S,K):
     '''
     Evaluate structure.
     '''
     nph = np.max(S)
     ntotal = np.prod(S.shape)
     d = np.ndim(S)
+    print('...computing for dimension %i' % d)
     v = np.array([np.sum(S==i)/ntotal for i in range(1,nph+1)])
+    print('...volume fractions')
+    print(v)
     out = np.array([
-            reussiso(v,K)
-            ,hsiso(v,K,d=d)[0]
-            ,hsiso(v,K,d=d)[1]
-            ,voigtiso(v,K)
+            reuss_iso(v,K)
+            ,hs_iso(v,K,d=d)[0]
+            ,hs_iso(v,K,d=d)[1]
+            ,voigt_iso(v,K)
             ])
     if nph==2:
-        plot2phiso(K,d=d,vl=v[0])
+        plot_2ph_iso(K,d=d,vl=v[0])
     return out
 
 #%% Plots
     
-def plot2phiso(
+def plot_2ph_iso(
         K
         ,d=2
         ,n=20
         ,vl=0
-        ,x_label='$c_1$'
+        ,x_label='$v_1$'
         ,plot_title=''
         ,point=[]
         ,point_label=''
@@ -126,15 +129,15 @@ def plot2phiso(
     '''
     v1 = np.linspace(0,1,n)
     vb = np.array([
-            voigtiso([v,1-v],K)
+            voigt_iso([v,1-v],K)
             for v in v1
             ])
     rb = np.array([
-            reussiso([v,1-v],K)
+            reuss_iso([v,1-v],K)
             for v in v1
             ])
     hs = np.array([
-            hsiso([v,1-v],K,d=d)
+            hs_iso([v,1-v],K,d=d)
             for v in v1
             ])
     
