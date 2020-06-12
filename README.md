@@ -1,5 +1,5 @@
 # EQ2PC
-Generation of structures with equivalent 2-point correlation
+Generation of root and child structures with identical 2-point correlation.
 
 Contact:
 * mauricio.fernandez.lb@gmail.com
@@ -16,10 +16,10 @@ by Mauricio Fernández and Felix Fritzen.
 
 ## Description
 
-The present repository offers a Python 3 implementation for the generation of discrete periodic structures with identical 2-point correlation as described in the work cited above. The source files are contained in the 'src' folder, where 'eq2pc.py' is the main module. The functionalities of the routines are demonstrated in the notebooks:
+The present repository offers a Python 3 implementation for the generation of discrete periodic structures with identical 2-point correlation as described in the work cited above. The source files are contained in the `src` folder, where `eq2pc.py` is the main module. The functionalities of the routines are demonstrated in the notebooks:
 
-* [Demo 1: Search for 2pc-equivalent root structures](demo1_root_structures.ipynb)
-* [Demo 2: Generation of 2pc-equivalent child structures](demo2_child_structures.ipynb)
+* [Demo 1: Search for 2PC-equivalent root structures](demo1_root_structures.ipynb)
+* [Demo 2: Generation of 2PC-equivalent child structures](demo2_child_structures.ipynb)
 
 Additionally, routines for the computation of the Voigt, Reuss and HS bounds for linear conductivity and elasticity are provided for given structures. This is demonstrated in:
 
