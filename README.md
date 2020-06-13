@@ -1,6 +1,8 @@
 # EQ2PC
 Generation of root and child structures with identical 2-point correlation.
 
+[![Actions Status](https://github.com/mauricio-fernandez-l/EQ2PC/workflows/Build/badge.svg)](https://github.com/mauricio-fernandez-l/EQ2PC/actions)
+
 Contact:
 * mauricio.fernandez.lb@gmail.com
 * fritzen@mechbau.uni-stuttgart.de
@@ -16,7 +18,7 @@ by Mauricio Fernández and Felix Fritzen.
 
 ## Description
 
-The present repository offers a Python 3 implementation for the generation of discrete periodic structures with identical 2-point correlation as described in the work cited above. The source files are contained in the `src` folder, where `eq2pc.py` is the main module. The functionalities of the routines are demonstrated in the notebooks:
+The present repository offers a Python 3.7 implementation for the generation of discrete periodic structures with identical 2-point correlation as described in the work cited above. The source files are contained in the `src` folder, where `eq2pc.py` is the main module. The functionalities of the routines are demonstrated in the notebooks:
 
 * [Demo 1: Search for 2PC-equivalent root structures](demo1_root_structures.ipynb)
 * [Demo 2: Generation of 2PC-equivalent child structures](demo2_child_structures.ipynb)
