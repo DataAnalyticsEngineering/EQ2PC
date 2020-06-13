@@ -3,7 +3,7 @@
 """
 @author: Mauricio Fernández
 
-Github: FIXME
+Github: https://github.com/mauricio-fernandez-l/EQ2PC
 
 Module for generation and manipulation of 2PC-equivalent structures.
 
