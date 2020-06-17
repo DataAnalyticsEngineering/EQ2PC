@@ -4,8 +4,8 @@ Generation of root and child periodic discrete structures with identical 2-point
 [![Actions Status](https://github.com/mauricio-fernandez-l/EQ2PC/workflows/Build/badge.svg)](https://github.com/mauricio-fernandez-l/EQ2PC/actions)
 
 Contact:
-* fernandez@cps.tu-darmstadt.de
-* fritzen@mechbau.uni-stuttgart.de
+* Mauricio Fernández: [email](fernandez@cps.tu-darmstadt.de), [website](https://www.maschinenbau.tu-darmstadt.de/cps/department_cps/team_1/team_detail_184000.en.jsp)
+* Felix Fritzen: [email](fritzen@mechbau.uni-stuttgart.de), [website](https://www.simtech.uni-stuttgart.de/detail/mitarbeiter/Fritzen-00001/)
 
 Research group website: http://www.mib.uni-stuttgart.de/dae
 
