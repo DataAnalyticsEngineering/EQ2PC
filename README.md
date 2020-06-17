@@ -4,17 +4,19 @@ Generation of root and child structures with identical 2-point correlation.
 [![Actions Status](https://github.com/mauricio-fernandez-l/EQ2PC/workflows/Build/badge.svg)](https://github.com/mauricio-fernandez-l/EQ2PC/actions)
 
 Contact:
-* mauricio.fernandez.lb@gmail.com
+* fernandez@cps.tu-darmstadt.de
 * fritzen@mechbau.uni-stuttgart.de
 
-Research group website: https://www.mib.uni-stuttgart.de/en/emma/
+Research group website: http://www.mib.uni-stuttgart.de/dae
+
+Last update: 2020-06-17
 
 ## Related work
 Manuscript
 
 "On the generation of periodic discrete structures with identical two-point correlation"
 
-by Mauricio Fernández and Felix Fritzen.
+by Mauricio Fernández and Felix Fritzen. Submitted to *Proceedings of the Royal Society A* (under review). Pre-print available at https://arxiv.org/abs/2002.01234 .
 
 ## Description
 

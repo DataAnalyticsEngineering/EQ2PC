@@ -155,15 +155,15 @@ def plot_2ph_iso(K, n=20, vl=0):
 
     for i in [0, 3]:
         plt.figure()
-        plt.plot(v1, vb[:, i, i], color='blue', linestyle='-', label='Voigt')
+        plt.plot(v1, vb[:, i, i], color='blue', linestyle='-', label='Voigt', linewidth=2)
         plt.plot(v1, hsupp[:, i, i], color='lightgray',
-                 linestyle='-', label='HS_upp')
+                 linestyle='-', label='HS_upp', linewidth=2)
         plt.plot(v1, hslow[:, i, i], color='lightgray',
-                 linestyle='--', label='HS_low')
-        plt.plot(v1, rb[:, i, i], color='blue', linestyle='--', label='Reuss')
+                 linestyle='--', label='HS_low', linewidth=2)
+        plt.plot(v1, rb[:, i, i], color='blue', linestyle='--', label='Reuss', linewidth=2)
         if vl != 0:
-            plt.axvline(vl, color='gray', linestyle='--')
+            plt.axvline(vl, color='gray', linestyle='--', linewidth=2)
         plt.legend()
         plt.xlabel('$v_1$')
-        plt.title('Stiffness component (%i,%i)' % (i + 1, i + 1))
+        plt.ylabel('Stiffness component $K_{%i%i}$' % (i + 1, i + 1))
         plt.show()

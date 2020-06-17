@@ -148,12 +148,12 @@ def plot_2ph_iso(
     ])
 
     plt.figure()
-    plt.plot(v1, vb, color='blue', linestyle='-', label='Voigt')
-    plt.plot(v1, hs[:, 1], color='lightgray', linestyle='-', label='HS_upper')
-    plt.plot(v1, hs[:, 0], color='lightgray', linestyle='--', label='HS_lower')
-    plt.plot(v1, rb, color='blue', linestyle='--', label='Reuss')
+    plt.plot(v1, vb, color='blue', linestyle='-', label='Voigt', linewidth=2)
+    plt.plot(v1, hs[:, 1], color='lightgray', linestyle='-', label='HS_upper', linewidth=2)
+    plt.plot(v1, hs[:, 0], color='lightgray', linestyle='--', label='HS_lower', linewidth=2)
+    plt.plot(v1, rb, color='blue', linestyle='--', label='Reuss', linewidth=2)
     if vl != 0:
-        plt.axvline(vl, color='gray', linestyle='--')
+        plt.axvline(vl, color='gray', linestyle='--', linewidth=2)
     if len(point) > 0:
         plt.scatter([point[0]], [point[1]], label=point_label)
     if len(point2) > 0:
@@ -161,6 +161,7 @@ def plot_2ph_iso(
     plt.legend()
     plt.title(plot_title)
     plt.xlabel(x_label)
+    plt.ylabel('$K_{11,22}$')
     if len(save_path) > 0:
         plt.tight_layout()
         plt.savefig(save_path)
