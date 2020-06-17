@@ -35,7 +35,7 @@ Finally, limitations of the work of
 
 with respect to the determination of 2PC are discussed in the related work and demonstrated in the notebook
 
-* [Demo 4: Limitations of Niezgoda et al (2008)](demo4_niezgoda_2008.ipynb)
+* [Demo 4: Formal limitations of Niezgoda et al (2008)](demo4_niezgoda_2008.ipynb)
 
 **For notebook interaction:** please either download the repository or open it in 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mauricio-fernandez-l/EQ2PC/master)
