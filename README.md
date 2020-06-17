@@ -1,5 +1,5 @@
 # EQ2PC
-Generation of root and child structures with identical 2-point correlation.
+Generation of root and child periodic discrete structures with identical 2-point correlation.
 
 [![Actions Status](https://github.com/mauricio-fernandez-l/EQ2PC/workflows/Build/badge.svg)](https://github.com/mauricio-fernandez-l/EQ2PC/actions)
 
