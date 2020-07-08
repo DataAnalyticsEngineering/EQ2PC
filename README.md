@@ -29,7 +29,7 @@ Additionally, routines for the computation of the Voigt, Reuss and HS bounds for
 
 * [Demo 3: Computation of bounds for conductivity and elasticity](demo3_bounds.ipynb)
 
-Finally, limitations of the work of 
+Finally, formal limitations of the work of 
 
 * Niezgoda, S.R., Fullwood, D.T., and Kalidindi, S.R. (2008): Delineation of the space of 2-point correlations in a composite material system. Acta Materialia 56, 5285 - 5292 
 
