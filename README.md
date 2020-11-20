@@ -14,9 +14,9 @@ Last update: 2020-06-17
 ## Related work
 Manuscript
 
-"On the generation of periodic discrete structures with identical two-point correlation"
+["On the generation of periodic discrete structures with identical two-point correlation"](https://royalsocietypublishing.org/doi/10.1098/rspa.2020.0568)
 
-by Mauricio Fernández and Felix Fritzen. Submitted to *Proceedings of the Royal Society A* (under review). Pre-print available at https://arxiv.org/abs/2002.01234 .
+by Mauricio Fernández and Felix Fritzen. Published in *Proceedings of the Royal Society A*, DOI 10.1098/rspa.2020.0568. Pre-print available at https://arxiv.org/abs/2002.01234 .
 
 ## Description
 
