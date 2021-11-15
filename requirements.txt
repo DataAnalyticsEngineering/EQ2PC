@@ -18,7 +18,7 @@ mpmath==1.1.0
 nexusformat==0.5.3
 numpy==1.18.5
 packaging==20.4
-pip==20.1.1
+pip==21.1
 pluggy==0.13.1
 py==1.8.1
 pycodestyle==2.6.0
